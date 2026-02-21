@@ -9,7 +9,6 @@ A custom ROS2 bridge (`unity_lidar_bridge`) is developed to receive LiDAR data f
 
 ## Features
 - 360° LiDAR simulation using Unity Raycasts  
-- Real-time distance measurement from virtual environment  
 - Custom TCP-based bridge between Unity and ROS2  
 - ROS2 LaserScan publishing on `/scan` topic  
 - Visualization in RViz  
@@ -56,19 +55,18 @@ Unity (Raycast LiDAR)
 Open a terminal and run:
 
 ```bash
-cd unity-raycast-lidar-ros2
+cd ~/unity-raycast-lidar-ros2
 source /opt/ros/jazzy/setup.bash
-source install/setup.bash
 ros2 launch unity_lidar_bridge lidar_bridge_launch.py
 ```
 
 ### 2. Run Unity Simulation
-- Open project in Unity 
+- Open project in Unity (opening project first time may take longer)
 - Press Play
 - The LiDAR data will start streaming to ROS2
 
 #### Note
-If you dont see any objects in the project then you may need to go to File &rarr; Open Scene &rarr; Select file SampleScene.unity at 
+If you dont see any objects in the project then you may need to go to File &rarr; Open Scene &rarr; Select file **SampleScene.unity** at 
 ```
 ~/unity-raycast-lidar-ros2/Assets/Scenes/SampleScene.unity
 ```
@@ -78,3 +76,10 @@ If you dont see any objects in the project then you may need to go to File &rarr
 source /opt/ros/jazzy/setup.bash
 rviz2
 ```
+
+## Configuration & Parameters
+
+You can change the Range, Number of Rays, Scan Rate and Rotation Speed of LiDAR by following the below steps:  
+   1. Click **LiDAR** in Hierarchy panel on left side
+   2. On Right Side you can find parameter like Max Distance, Number of Rays, Scan Rate and Rotation Speed in **Lidar Raycast (Script)** component  
+![unity.png](/docs/unity.png)
