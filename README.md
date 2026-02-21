@@ -63,7 +63,6 @@ colcon build
 ```
 
 ```bash
-cd ~/unity-raycast-lidar-ros2
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
 ros2 launch unity_lidar_bridge lidar_bridge_launch.py
