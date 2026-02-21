@@ -63,9 +63,15 @@ ros2 launch unity_lidar_bridge lidar_bridge_launch.py
 ```
 
 ### 2. Run Unity Simulation
-- Open project in Unity
+- Open project in Unity 
 - Press Play
 - The LiDAR data will start streaming to ROS2
+
+#### Note
+If you dont see any objects in the project then you may need to go to File &rarr; Open Scene &rarr; Select file SampleScene.unity at 
+```
+~/unity-raycast-lidar-ros2/Assets/Scenes/SampleScene.unity
+```
 
 ### 3. Visualize in RViz2 (Terminal 2)
 ```bash
