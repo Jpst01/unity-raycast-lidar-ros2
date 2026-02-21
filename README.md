@@ -76,10 +76,13 @@ If you dont see any objects in the project then you may need to go to File &rarr
 source /opt/ros/jazzy/setup.bash
 rviz2
 ```
+- Once RViz is loaded, expand ```LaserScan``` and double click on the white space in front of ```topic``` and select ```/scan```
+- You can increase the size of points by increasing value in front of ```size (m)```  
+![rviz.png](docs/rviz.png)  
 
 ## Configuration & Parameters
 
-You can change the Range, Number of Rays, Scan Rate and Rotation Speed of LiDAR by following the below steps:  
+You can change the Range, Number of Rays, Scan Rate and Rotation Speed of LiDAR in Unity by following the below steps:  
    1. Click **LiDAR** in Hierarchy panel on left side
    2. On Right Side you can find parameter like Max Distance, Number of Rays, Scan Rate and Rotation Speed in **Lidar Raycast (Script)** component  
-![unity.png](/docs/unity.png)
+![unity.png](docs/unity.png)  
