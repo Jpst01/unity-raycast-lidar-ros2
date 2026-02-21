@@ -7,6 +7,13 @@ A custom ROS2 bridge (`unity_lidar_bridge`) is developed to receive LiDAR data f
 
 ---
 
+## Demo
+
+*Click gif to watch full video*  
+
+[![Demo GIF](docs/unity_lidar_raycast_github-ezgif.com-video-to-gif-converter.gif)](https://youtu.be/Xq74nPXzWSY)
+---
+
 ## Features
 - 360° LiDAR simulation using Unity Raycasts  
 - Custom TCP-based bridge between Unity and ROS2  
