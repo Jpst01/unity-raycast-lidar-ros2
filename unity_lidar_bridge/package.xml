@@ -4,7 +4,7 @@
   <name>unity_lidar_bridge</name>
   <version>0.1.0</version>
   <description>Bridge between Unity LiDAR raycast and ROS2 LaserScan</description>
-  <maintainer email="jayeshwar@todo.todo">Jayeshwar</maintainer>
+  <maintainer email="jayeshwar.tanwar01@gmail.com">Jayeshwar Pratap Singh Tanwar</maintainer>
   <license>MIT</license>
 
   <depend>rclpy</depend>
