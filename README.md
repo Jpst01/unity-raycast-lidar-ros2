@@ -1,9 +1,10 @@
 # Raycast-Based LiDAR Simulation in Unity with ROS2 (Jazzy)
 
 ## Overview
-This project implements a 2D LiDAR simulation using Unity’s Raycast system and publishes the scan data to ROS2 (Jazzy) for visualization in RViz.
+This project implements a 2D LiDAR simulation using Unity's Raycast system with **keyboard-controlled movement**. The LiDAR can be moved around 3D objects in the scene, and the scan data is published to ROS2 (Jazzy) for real-time visualization in RViz.
 
-A custom ROS2 bridge (`unity_lidar_bridge`) is developed to receive LiDAR data from Unity over TCP and convert it into `sensor_msgs/msg/LaserScan`.
+A custom ROS2 bridge (`unity_lidar_bridge`) receives LiDAR data from Unity over TCP, publishes `sensor_msgs/msg/LaserScan` on `/scan`, and broadcasts a **dynamic TF** (`map → lidar_frame`) so RViz tracks the LiDAR's live position.
+
 
 ---
 
@@ -11,28 +12,45 @@ A custom ROS2 bridge (`unity_lidar_bridge`) is developed to receive LiDAR data f
 
 *Click gif to watch full video*  
 
-[![Demo GIF](docs/unity_lidar_raycast_github-ezgif.com-video-to-gif-converter.gif)](https://youtu.be/Xq74nPXzWSY)
+[![Demo GIF](docs/unity_lidar_raycast_move.gif)](https://youtu.be/FB7uEyiEj2c)
 ---
 
 ## Features
-- 360° LiDAR simulation using Unity Raycasts  
-- Custom TCP-based bridge between Unity and ROS2  
-- ROS2 LaserScan publishing on `/scan` topic  
-- Visualization in RViz  
-- Static TF setup (`map → lidar_frame`)  
+- 360° LiDAR simulation using Unity Raycasts
+- **WASD keyboard-controlled movement**
+- Custom TCP-based bridge between Unity and ROS2
+- ROS2 LaserScan publishing on `/scan` topic
+- **Dynamic TF broadcasting** (`map → lidar_frame`) — LiDAR position updates in real-time
+- Visualization in RViz — objects stay stationary, only LiDAR moves 
 
 ---
 
 ## System Architecture
 
-Unity (Raycast LiDAR)  
-→ TCP Socket (JSON data)  
-→ ROS2 Bridge (`unity_lidar_bridge`)  
-→ `/scan` (LaserScan)  
+```
+Unity (Raycast LiDAR + Keyboard Movement)
+→ TCP Socket (JSON: scan data + position)
+→ ROS2 Bridge (unity_lidar_bridge)
+→ /scan (LaserScan) + /tf (Dynamic Transform)
 → RViz Visualization  
+```
+
+---  
+
+## Controls
+
+| Key | Action |
+|-----|--------|
+| **W** | Move forward |
+| **S** | Move backward |
+| **A** | Move left |
+| **D** | Move right |
+
+
+> **Note:** You must be in the Unity **Game** view before using keyboard controls.
 
 ---
-
+  
 ## Project Structure
 
 ### Unity Project
@@ -79,6 +97,8 @@ ros2 launch unity_lidar_bridge lidar_bridge_launch.py
 - Open project in Unity (opening project first time may take longer)
 - Press Play
 - The LiDAR data will start streaming to ROS2
+- You must be in the **Game** view to use keyboard controls
+- Use **WASD** to move the LiDAR around objects
 
 #### Note
 If you dont see any objects in the project then you may need to go to File &rarr; Open Scene &rarr; Select file **SampleScene.unity** at 

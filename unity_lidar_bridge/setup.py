@@ -15,8 +15,8 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Jayeshwar Pratap Singh Tanwar',
-    maintainer_email='jayeshwar.tanwar01@gmail.com',
+    maintainer='Jayeshwar',
+    maintainer_email='jayeshwar@todo.todo',
     description='Bridge between Unity LiDAR raycast and ROS2 LaserScan',
     license='MIT',
     entry_points={

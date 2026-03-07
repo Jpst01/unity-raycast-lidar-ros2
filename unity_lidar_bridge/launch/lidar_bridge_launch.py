@@ -16,20 +16,6 @@ def generate_launch_description():
         }],
     )
 
-    static_tf = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_tf_map_to_lidar',
-        arguments=[
-            '--x', '0', '--y', '0', '--z', '0',
-            '--roll', '0', '--pitch', '0', '--yaw', '0',
-            '--frame-id', 'map',
-            '--child-frame-id', 'lidar_frame',
-        ],
-        output='screen',
-    )
-
     return LaunchDescription([
-        static_tf,
         lidar_bridge,
     ])

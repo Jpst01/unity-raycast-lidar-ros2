@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System;
 using System.Net.Sockets;
 using System.Text;
@@ -10,7 +11,10 @@ public class LidarRaycast : MonoBehaviour
     public float maxDistance = 20f;
     public int numRays = 360;
     public float scanRate = 10f;
-    public float rotationSpeed = 50f;
+
+    [Header("Movement Settings")]
+    public float moveSpeed = 5f;
+    public float turnSpeed = 90f;
 
     [Header("TCP Settings")]
     public string host = "127.0.0.1";
@@ -58,12 +62,37 @@ public class LidarRaycast : MonoBehaviour
             }
         }
 
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        HandleMovement();
 
         if (Time.time - lastScanTime >= 1f / scanRate)
         {
             lastScanTime = Time.time;
             Scan();
+        }
+    }
+
+    void HandleMovement()
+    {
+        float moveInput = 0f;
+        float strafeInput = 0f;
+        float turnInput = 0f;
+
+        var kb = Keyboard.current;
+        if (kb == null) return;
+
+        if (kb.wKey.isPressed) moveInput += 1f;
+        if (kb.sKey.isPressed) moveInput -= 1f;
+        if (kb.aKey.isPressed) strafeInput -= 1f;
+        if (kb.dKey.isPressed) strafeInput += 1f;
+        if (kb.qKey.isPressed) turnInput -= 1f;
+        if (kb.eKey.isPressed) turnInput += 1f;
+
+        Vector3 move = new Vector3(strafeInput, 0, moveInput) * moveSpeed * Time.deltaTime;
+        transform.Translate(move, Space.World);
+
+        if (turnInput != 0f)
+        {
+            transform.Rotate(Vector3.up, turnInput * turnSpeed * Time.deltaTime);
         }
     }
 
@@ -103,15 +132,25 @@ public class LidarRaycast : MonoBehaviour
 
         try
         {
-            StringBuilder sb = new StringBuilder(numRays * 8 + 128);
+            Vector3 pos = transform.position;
+
+            StringBuilder sb = new StringBuilder(numRays * 8 + 256);
             sb.Append("{\"angle_min\":0.0,\"angle_max\":");
             sb.Append((2.0f * Mathf.PI).ToString(CultureInfo.InvariantCulture));
             sb.Append(",\"angle_increment\":");
             sb.Append((angleStep * Mathf.Deg2Rad).ToString(CultureInfo.InvariantCulture));
             sb.Append(",\"range_min\":0.1,\"range_max\":");
             sb.Append(maxDistance.ToString(CultureInfo.InvariantCulture));
-            sb.Append(",\"ranges\":[");
 
+            sb.Append(",\"position\":[");
+            sb.Append(pos.x.ToString("F4", CultureInfo.InvariantCulture));
+            sb.Append(",");
+            sb.Append(pos.y.ToString("F4", CultureInfo.InvariantCulture));
+            sb.Append(",");
+            sb.Append(pos.z.ToString("F4", CultureInfo.InvariantCulture));
+            sb.Append("]");
+
+            sb.Append(",\"ranges\":[");
             for (int i = 0; i < ranges.Length; i++)
             {
                 if (i > 0) sb.Append(",");
